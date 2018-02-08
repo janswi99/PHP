@@ -1,0 +1,147 @@
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+#include <iomanip>
+
+using namespace std;
+
+void sito(){
+    int n, pierwiastek;
+    cout << "Podaj granice: ";
+    cin >> n;
+    int *T = new int [n+1];
+    pierwiastek=sqrt(n);
+    for(int i=2; i<=n; i++)
+        T[i]=i;
+
+    for(int i=2; i<=pierwiastek; i++)
+    {
+        if(T[i]!=0)
+            for(int j=2*i; j<=n; j+=i)
+                T[j]=0;
+    }
+
+    for(int i=2; i<=n; i++)
+        if(T[i]!=0)
+            cout << T[i] << endl;
+}
+
+bool ros(int *T, int n){
+    for(int i=0; i<n-1; i++)
+        if(T[i]>=T[i])
+            return false;
+    return true;
+}
+
+bool mal(int *T, int n){
+    for(int i=0; i<n-1; i++)
+        if(T[i]<=T[i+1])
+            return false;
+    return true;
+}
+
+bool nieros(int *T, int n){
+    for(int i=0; i<n-1; i++)
+        if(T[i]<T[i+1])
+            return false;
+    return true;
+}
+
+bool niemal(int *T, int n){
+    for(int i=0; i<n-1; i++)
+        if(T[i]>T[i+1])
+            return false;
+    return true;
+}
+
+bool staly(int *T, int n){
+    for(int i=0; i<n-1; i++)
+        if(T[i]!=T[i+1])
+            return false;
+    return true;
+}
+
+void monotonicznosc(){
+    int n;
+    cout << "Podaj rozmiar tablicy: "; cin >> n;
+    int *T = new int [n];
+    srand(time(NULL));
+
+    for(int i=0; i<n; i++){
+        T[i]=rand()%21-10;
+        cout << setw(3) << i+1 << ". " << setw(3) << T[i] << endl;
+    }
+    cout << endl;
+    if(staly(T,n))
+        cout << "Staly";
+    else if(ros(T,n))
+        cout << "Rosnacy";
+    else if(mal(T,n))
+        cout << "Malejacy";
+    else if(nieros(T,n))
+        cout << "Nierosnacy";
+    else if(niemal(T,n))
+        cout << "Niemalejacy";
+    else
+        cout << "Niemonotoniczny";
+}
+
+int suma(){
+    int suma, n;
+    cout << "Podaj rozmiar tablicy: "; cin >> n;
+    int *T = new int [n];
+    int maks=T[0];
+
+    for(int i=0; i<n; i++){
+        T[i]=rand()%21-10;
+        cout << setw(3) << i+1 << ". " << setw(3) << T[i] << endl;
+    }
+
+    for(int i=0; i<n; i++){
+        suma=T[i];
+        if(suma>maks)
+            maks=suma;
+        for(int j=i+1; j<n; j++){
+            suma=suma+T[j];
+            if(suma>maks)
+                maks=suma;
+        }
+    }
+    cout << endl << endl << maks;
+}
+
+int main()
+{
+    while(true)
+    {
+        int wybor;
+        cout << "SPRAWDZIANIK!" << endl << endl;
+        cout << "1. Sito Eratostenesa \n";
+        cout << "2. Monotonicznosc \n";
+        cout << "3. Najlepsza suma \n";
+        cout << "4. Rekurencja \n\n";
+        cout << "Co wybierasz? ";
+        cin >> wybor;
+
+        switch(wybor)
+        {
+            case 1:
+            {
+                sito();
+                break;
+            }
+            case 2:
+            {
+                monotonicznosc();
+                break;
+            }
+            case 3:
+            {
+                suma();
+                break;
+            }
+        }
+    }
+    return 0;
+}
