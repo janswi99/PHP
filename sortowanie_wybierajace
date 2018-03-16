@@ -1,0 +1,43 @@
+// Sortowanie wybierające - nierosnące
+
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+#include <cstdlib>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cout << "Podaj rozmiar tablicy: "; cin >> n;
+    int *T = new int [n];
+
+    srand(time(NULL));
+
+    for (int i=0; i<n; i++)
+        T[i]=rand()%111-10;
+
+    cout << "Ciag przed posortowaniem: \n";
+
+    for (int i=0; i<n; i++)
+        cout << setw(4) << T[i];
+
+    for (int i=0; i<n-1; i++){
+        for (int j=i+1; j<n; j++){
+            if(T[j]>=T[i])
+                swap(T[j], T[i]);
+        }
+    }
+
+    cout << "\nCiag po sortowaniu: \n";
+
+    for (int i=0; i<n; i++)
+        cout << setw(4) << T[i];
+
+    delete []T;
+    return 0;
+}
+
+
