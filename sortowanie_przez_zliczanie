@@ -1,0 +1,61 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+void wpisz(int *C, int n){
+    for (int i=0; i<n; i++){
+        cout << "Podaj " << i+1 << ". wyraz ciagu: ";
+        cin >> C[i];
+    }
+}
+
+void wypisz(int *C, int n){
+    for (int i=0; i<n; i++){
+        cout << setw(3) << C[i] << " | ";
+    }
+}
+
+int maks(int *C, int n){
+    int najw = C[0];
+    for (int i=0; i<n; i++)
+        if (C[i]>najw)
+            najw=C[i];
+    return najw;
+}
+
+void sortowanie(int *C, int* T, int n, int m){
+    for (int i=0; i<m; i++)
+        for (int j=0; j<n; j++)
+            if (C[j]==i)
+                T[i]++;
+}
+
+int main(){
+    int n;
+    cout << "Ilu elementowy ciag utworzyc: "; cin >> n;
+    int *C = new int [n];
+
+    wpisz(C,n);
+    cout << "\n\nCiag przed sortowaniem: " << endl; wypisz(C,n);
+    int m = maks(C,n)+1;
+    cout << "\n\nNajwieksza wartosc w ciagu: " << m-1;
+
+    cout << endl << endl;
+
+    int *T = new int [m];
+
+    for (int z=0; z<m; z++)
+        T[z]=0;
+    cout << endl;
+
+    sortowanie(C,T,n,m);
+
+    cout << "Ciag po sortowaniu: ";
+    cout << endl << endl;
+    for (int i=0; i<m; i++)
+        for (int j=0; j<T[i]; j++)
+            cout << setw(3) <<  i << " | ";
+
+    return 0;
+}
