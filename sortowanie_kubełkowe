@@ -1,29 +1,29 @@
 #include<iostream>
+
 using namespace std;
 
 
 void quick_sort(int *tab, int lewy, int prawy)
 {
-	if(prawy <= lewy) return;
+	int i = lewy, j = prawy, pivot = tab[(lewy+prawy)/2];
 
-	int i = lewy - 1, j = prawy + 1,
-	pivot = tab[(lewy+prawy)/2];
+	do{
+		while(tab[i]<pivot)
+            i++;
+		while(tab[j]>pivot)
+            j--;
 
-	while(1)
-	{
-		while(pivot>tab[++i]);
-		while(pivot<tab[--j]);
-
-		if (i<=j)
+		if (i<=j){
 			swap(tab[i],tab[j]);
-		else
-			break;
-	}
+			i++;
+			j--;
+		}
+	}while (i<=j);
 
 	if(j > lewy)
-	quick_sort(tab, lewy, j);
+        quick_sort(tab, lewy, j);
 	if(i < prawy)
-	quick_sort(tab, i, prawy);
+        quick_sort(tab, i, prawy);
 }
 
 int main()
@@ -44,3 +44,4 @@ int main()
 
   	return 0;
 }
+
