@@ -1,75 +1,66 @@
 #include<iostream>
 #include<cstdlib>
+
 using namespace std;
 
-void szukaj(int tab[], int n, int &MIN, int &MAX)
+void szukaj(int *T, int n, int &minimum, int &maksimum)
 {
 	int i = 2;
-	if(n>=2) //jesli są co najmnniej dwa elementy
+	if(n>=2)
 	{
-		if(tab[0]>tab[1]) //rozpatrujemy dwa pierwsze elementy
+		if(T[0]>T[1])
 		{
-			MIN = tab[1];
-			MAX = tab[0];
+			minimum = T[1];
+			maksimum = T[0];
 		}
 		else
 		{
-			MIN = tab[0];
-			MAX = tab[1];
-		}	
-		//rozpatruję resztę liczb
+			minimum = T[0];
+			maksimum = T[1];
+		}
 		while(i+2<=n)
 		{
-			if(tab[i]>tab[i+1])
+			if(T[i]>T[i+1])
 			{
-				//tab[i] - należy do zbioru potencjalnych maksimów
-				//tab[i+1 - należy do zbioru potencjalnych minimów
-				if(tab[i]>MAX) 
-					MAX = tab[i]; 
-				if(tab[i+1]<MIN)
-					MIN = tab[i+1];
+				if(T[i]>maksimum)
+					maksimum = T[i];
+				if(T[i+1]<minimum)
+					minimum = T[i+1];
 			}
 			else
 			{
-				//tab[i+1] - należy do zbioru potencjalnych maksimów
-				//tab[i] - należy do zbioru potencjalnych minimów
-				if(tab[i+1]>MAX) 
-					MAX = tab[i+1]; 
-				if(tab[i]<MIN)
-					MIN = tab[i];
+				if(T[i+1]>maksimum)
+					maksimum = T[i+1];
+				if(T[i]<minimum)
+					minimum = T[i];
 			}
 			i+=2;
 		}
-		if(n%2==1) //jesli liczba elementów jest nieparzysta
+		if(n%2==1)
 		{
-			if(tab[i] > MAX) MAX = tab[i];
-			if(tab[i] < MIN) MIN = tab[i];
+			if(T[i] > maksimum)
+                maksimum = T[i];
+			if(T[i] < minimum)
+                minimum = T[i];
 		}
 	}
 	else
-	{
-		MIN = MAX = tab[0];
-	}	
+		minimum = maksimum = T[0];
 }
 
 int main()
 {
-	int MIN, MAX, tab[100]; 
-	unsigned int n;
-	
-	cout<<"Podaj liczbę elementów w zbiorze: ";
-	cin>>n;
-	
-	if(n == 0 || n > 100)
-		cout<<"Podałes nieprawidłową liczbę!\n";
-	else
-		for(int i=0;i<n;i++)
-			cin>>tab[i];
-	
-	szukaj(tab, n, MIN, MAX);
-	
-	cout<<"MIN: "<<MIN<<"\nMAX: "<<MAX<<endl;
-	
-	system("pause");
+    int n, minimum, maksimum, *T;
+    cout << "Ilosc elementow: "; cin >> n;
+    T = new int [n];
+
+    for(int i=0; i<n; i++)
+        cin >> T[i];
+
+	szukaj(T, n, minimum, maksimum);
+
+	cout<<"MIN: "<<minimum<<"\nMAX: "<<maksimum<<endl;
+
 	return 0;
 }
+
